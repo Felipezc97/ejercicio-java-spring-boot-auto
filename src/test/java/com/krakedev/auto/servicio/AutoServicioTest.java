@@ -67,4 +67,59 @@ class AutoServiceTest {
         assertTrue(eliminado, "El auto debería haber sido eliminado");
         assertEquals(0, autoService.listar().size());
     }
+    
+    @Test
+    void testBuscarPorPlacaInexistente() {
+        // Buscamos una placa que nunca se agregó
+        Auto encontrado = autoService.buscarPorPlaca("XYZ-9999");
+        
+        assertNull(encontrado, "Debería retornar null si la placa no existe");
+    }
+
+    @Test
+    void testActualizarAutoExitoso() {
+        // 1. Preparamos el escenario
+        String placa = "ABC-1010";
+        autoService.crearAuto(new Auto(placa, "Fiat", "Gris"));
+        
+        // 2. Creamos el objeto con los nuevos datos
+        Auto datosNuevos = new Auto(placa, "Ferrari", "Rojo");
+        
+        // 3. Ejecutamos la actualización
+        Auto actualizado = autoService.actualizar(placa, datosNuevos);
+        
+        assertNotNull(actualizado);
+        assertEquals("Ferrari", actualizado.getMarca());
+        assertEquals("Rojo", actualizado.getColor());
+    }
+
+    @Test
+    void testActualizarAutoInexistente() {
+        Auto datosNuevos = new Auto("999-999", "Audi", "Verde");
+        
+        // Intentamos actualizar un auto que no está en la lista
+        Auto resultado = autoService.actualizar("999-999", datosNuevos);
+        
+        assertNull(resultado, "Debería retornar null si intentamos actualizar un auto que no existe");
+    }
+
+    @Test
+    void testEliminarAutoInexistente() {
+        boolean resultado = autoService.eliminar("NON-0000");
+        
+        assertFalse(resultado, "Debería retornar false si el auto a eliminar no existe");
+    }
+
+    @Test
+    void testGettersYSettersEntidad() {
+        Auto auto = new Auto();
+        auto.setPlaca("TTE-111");
+        auto.setMarca("Tesla");
+        auto.setColor("Blanco");
+
+        assertEquals("TTE-111", auto.getPlaca());
+        assertEquals("Tesla", auto.getMarca());
+        assertEquals("Blanco", auto.getColor());
+        assertNotNull(auto.toString());
+    }
 }
