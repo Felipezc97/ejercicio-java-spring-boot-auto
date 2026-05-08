@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Codecov
 
 on:
   push:
@@ -22,12 +22,22 @@ jobs:
         cache: 'maven'
 
     - name: Compilar y Ejecutar Pruebas con Maven
-      # Este comando limpia el proyecto, compila y corre los tests
-      # Al final, JaCoCo generará el reporte automáticamente en target/site/jacoco
+      # Genera el archivo target/site/jacoco/jacoco.xml
       run: mvn clean test
 
-    - name: Guardar Reporte de Cobertura como Artefacto
-      # Como no tenemos Codecov aún, subimos el HTML para que puedas descargarlo de GitHub
+    - name: Subir reporte a Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        # Aquí usamos el secreto que configuraste en GitHub
+        token: ${{ secrets.CODECOV_TOKEN }}
+        # Ruta al archivo XML generado por JaCoCo
+        files: ./target/site/jacoco/jacoco.xml
+        # Indica que es un proyecto Java
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
+
+    - name: Guardar Reporte como Artefacto (Opcional)
       uses: actions/upload-artifact@v4
       with:
         name: reporte-cobertura
