@@ -42,7 +42,7 @@ El código está organizado siguiendo las convenciones estándar de Maven y Spri
 📁 src/test  <-- Pruebas unitarias del proyecto
 ```
 
-## 👨‍🏫 Instructor & Mentoría
+## 👨‍🏫 Instructor
 Soy **Luis Felipe Zumárraga**, docente técnico enfocado en desarrollo de software. Mi meta es que mis estudiantes no solo aprendan a programar, sino a pensar como verdaderos arquitectos, con la capacidad de diseñar soluciones robustas, eficientes y de alta calidad.
 
 ## 🤝 Contacto y Mentoría
